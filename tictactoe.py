@@ -53,14 +53,34 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    for row in board:
+        if row.count(X) == 3: return X
+        if row.count(O) == 3: return O
+
+    if [board[0][0], board[1][1], board[2][2]].count(X) == 3: return X
+    if [board[0][0], board[1][1], board[2][2]].count(O) == 3: return O
+
+    board = list(map(list, zip(*board)))
+    for row in board:
+        if row.count(X) == 3: return X
+        if row.count(O) == 3: return O
+
+    board.reverse()
+    if [board[0][0], board[1][1], board[2][2]].count(X) == 3: return X
+    if [board[0][0], board[1][1], board[2][2]].count(O) == 3: return O
+
+    return None
 
 
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    raise NotImplementedError
+    empty_cells = 0
+    for row in board:
+        empty_cells = empty_cells + row.count(EMPTY)
+    
+    return True if empty_cells == 0 or winner(board) == O or winner(board) == X else False
 
 
 def utility(board):
