@@ -22,14 +22,23 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    raise NotImplementedError
+    empty_cells = 0
+    for row in board:
+        empty_cells = empty_cells + row.count(EMPTY)
+    
+    return X if empty_cells % 2 == 1 else O
 
 
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
+    actions = set()
+    for id_row, row in enumerate(board):
+        for id_cell, cell in enumerate(row):
+            actions.add((id_row, id_cell)) if cell == EMPTY else None
+
+    return actions
 
 
 def result(board, action):
