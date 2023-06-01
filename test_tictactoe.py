@@ -132,5 +132,25 @@ class TestTicTacToe(unittest.TestCase):
                 [O, EMPTY, X]]
         self.assertEqual(ttt.terminal(board), True)
 
+    def test_utility(self):
+        X = "X"
+        O = "O"
+        EMPTY = None
+
+        board = [[EMPTY, EMPTY, EMPTY],
+                [EMPTY, EMPTY, EMPTY],
+                [EMPTY, EMPTY, EMPTY]]
+        self.assertEqual(ttt.utility(board), 0)
+        
+        board = [[X, X, X],
+                [EMPTY, EMPTY, EMPTY],
+                [EMPTY, EMPTY, EMPTY]]
+        self.assertEqual(ttt.utility(board), 1)
+
+        board = [[EMPTY, EMPTY, EMPTY],
+                [O, O, O],
+                [EMPTY, EMPTY, EMPTY]]
+        self.assertEqual(ttt.utility(board), -1)
+
 if __name__ == '__main__':
     unittest.main()
