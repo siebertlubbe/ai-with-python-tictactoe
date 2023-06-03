@@ -124,22 +124,30 @@ def minimax(board):
 
 
 def max_value(board):
-    max_value = float('-inf')
+    max_value_with_action = {
+        "value": float('-inf'),
+        "action": None
+    }
 
     if terminal(board): return utility(board)
 
     for action in actions(board):
-        max_value = max(max_value, min_value(result(board, action)))
+        min_value_with_action = min_value(result(board, action))
+        max_value_with_action["value"] = max(max_value_with_action["value"], min_value_with_action)
 
-    return max_value
+    return max_value_with_action["value"]
 
 
 def min_value(board):
-    min_value = float('inf')
+    min_value_with_action = {
+        "value": float('inf'),
+        "action": None
+    }
 
     if terminal(board): return utility(board)
 
     for action in actions(board):
-        min_value = min(min_value, max_value(result(board, action)))
+        max_value_with_action = max_value(result(board, action))
+        min_value_with_action["value"] = min(min_value_with_action["value"], max_value_with_action)
 
-    return min_value
+    return min_value_with_action["value"]
