@@ -152,5 +152,26 @@ class TestTicTacToe(unittest.TestCase):
                 [EMPTY, EMPTY, EMPTY]]
         self.assertEqual(ttt.utility(board), -1)
 
+    def test_minimax(self):
+        X = "X"
+        O = "O"
+        EMPTY = None
+
+        board = [[X, O, X],
+                [X, O, O],
+                [O, X, X]]
+        self.assertEqual(ttt.minimax(board), None)     
+
+        board = [[X, O, X],
+                [X, O, O],
+                [EMPTY, X, O]]
+        self.assertEqual(ttt.minimax(board), (2,0))     
+
+        board = [[X, O, EMPTY],
+                [X, O, O],
+                [EMPTY, X, EMPTY]]
+        self.assertEqual(ttt.minimax(board), (2,0))     
+        
+
 if __name__ == '__main__':
     unittest.main()

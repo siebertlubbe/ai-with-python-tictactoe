@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+import copy
 
 X = "X"
 O = "O"
@@ -41,10 +42,11 @@ def actions(board):
     return actions
 
 
-def result(board, action):
+def result(passed_board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    board = copy.deepcopy(passed_board)
     board[action[0]][action[1]] = player(board)
     return board
 
@@ -96,4 +98,48 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+
+    best_action = None
+    if terminal(board): return best_action
+    
+    if player(board) == X:
+        current_max_value = float('-inf')
+
+        for action in actions(board):
+            if min_value(result(board,action)) > current_max_value: 
+                best_action = action
+                current_max_value = min_value(result(board,action))
+            
+        return best_action
+    
+    if player(board) == O:
+        current_min_value = float('inf')
+
+        for action in actions(board):
+            if max_value(result(board,action)) < current_min_value: 
+                best_action = action
+                current_min_value = max_value(result(board,action))
+            
+        return best_action
+
+
+def max_value(board):
+    max_value = float('-inf')
+
+    if terminal(board): return utility(board)
+
+    for action in actions(board):
+        max_value = max(max_value, min_value(result(board, action)))
+
+    return max_value
+
+
+def min_value(board):
+    min_value = float('inf')
+
+    if terminal(board): return utility(board)
+
+    for action in actions(board):
+        min_value = min(min_value, max_value(result(board, action)))
+
+    return min_value
